@@ -1,9 +1,8 @@
 import re
 
 stacks = []
-with open("05/input.txt") as file1:
-    lines = file1.readlines()
-    for line in lines:
+with open("05/input.txt") as file:
+    for line in file:
 
         # initial stacks
         if (stacks == []):

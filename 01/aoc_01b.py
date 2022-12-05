@@ -1,8 +1,8 @@
-with open("01/input.txt") as file1:
-    lines = file1.readlines()
-    subtotal = 0
-    elves = []
-    for line in lines:
+subtotal = 0
+elves = []
+
+with open("01/input.txt") as file:
+    for line in file:
         if (line == "\n"):
             elves.append((subtotal))
             subtotal = 0

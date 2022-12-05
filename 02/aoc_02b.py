@@ -2,9 +2,8 @@ options_opponent = ['A', 'B', 'C']
 options_result = ['X', 'Y', 'Z']
 points = 0
 
-with open("02/input.txt") as file1:
-    lines = file1.readlines()
-    for line in lines:
+with open("02/input.txt") as file:
+    for line in file:
         opponent, result = line.strip().split(' ')
         result_score = options_result.index(result) * 3
         response = (options_opponent.index(opponent) + options_result.index(result) - 1) % 3

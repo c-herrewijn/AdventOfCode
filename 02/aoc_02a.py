@@ -2,9 +2,8 @@ options_opponent = ['A', 'B', 'C']
 options_player = ['X', 'Y', 'Z']
 points = 0
 
-with open("02/input.txt") as file1:
-    lines = file1.readlines()
-    for line in lines:
+with open("02/input.txt") as file:
+    for line in file:
         opponent, player = line.strip().split(' ')
         shape_score = options_player.index(player) + 1
 
