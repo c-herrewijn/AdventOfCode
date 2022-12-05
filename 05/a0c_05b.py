@@ -1,7 +1,7 @@
 import re
 
 stacks = []
-with open("day05/input.txt") as file1:
+with open("05/input.txt") as file1:
     lines = file1.readlines()
     for line in lines:
 
@@ -21,9 +21,8 @@ with open("day05/input.txt") as file1:
             nr_moves = int(instructions.group(1))
             from_stack = int(instructions.group(2)) - 1
             to_stack = int(instructions.group(3)) - 1 
-            for i in range(nr_moves):
-                stacks[to_stack] = stacks[from_stack][0] + stacks[to_stack]
-                stacks[from_stack] = stacks[from_stack][1:]
+            stacks[to_stack] = stacks[from_stack][:nr_moves] + stacks[to_stack]
+            stacks[from_stack] = stacks[from_stack][nr_moves:]
 
 # result
 print("".join(stacks[i][0] for i in range(nr_stacks)))

@@ -2,7 +2,7 @@ options_opponent = ['A', 'B', 'C']
 options_player = ['X', 'Y', 'Z']
 points = 0
 
-with open("day02/input.txt") as file1:
+with open("02/input.txt") as file1:
     lines = file1.readlines()
     for line in lines:
         opponent, player = line.strip().split(' ')
