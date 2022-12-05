@@ -1,4 +1,4 @@
-with open("01b/input.txt") as file1:
+with open("day01/input.txt") as file1:
     lines = file1.readlines()
     subtotal = 0
     elves = []

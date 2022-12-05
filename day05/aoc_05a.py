@@ -1,7 +1,7 @@
 import re
 
 stacks = []
-with open("05a/input.txt") as file1:
+with open("day05/input.txt") as file1:
     lines = file1.readlines()
     for line in lines:
 
