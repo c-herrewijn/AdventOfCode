@@ -18,10 +18,7 @@ class Directory:
         self.file_size += file_size
 
     def get_total_size(self):
-        total_size = self.file_size
-        for child in self.child_dirs:
-            total_size += child.get_total_size()
-        return(total_size)
+        return(self.file_size + sum(child.get_total_size() for child in self.child_dirs))
 
 
 root_dir = Directory('/', None)
@@ -58,6 +55,5 @@ with open("07/input.txt") as file:
 # result
 free_space = 70000000 - root_dir.get_total_size()
 space_to_free = 30000000 - free_space
-volumes = [dir.get_total_size() for dir in dir_list if dir.get_total_size() >= space_to_free]
-volumes.sort()
-print(volumes[0])
+volumes = min(dir.get_total_size() for dir in dir_list if dir.get_total_size() >= space_to_free)
+print(volumes)

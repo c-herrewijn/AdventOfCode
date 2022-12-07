@@ -18,10 +18,7 @@ class Directory:
         self.file_size += file_size
 
     def get_total_size(self):
-        total_size = self.file_size
-        for child in self.child_dirs:
-            total_size += child.get_total_size()
-        return(total_size)
+        return(self.file_size + sum(child.get_total_size() for child in self.child_dirs))
 
 
 curr_dir = Directory('/', None)
