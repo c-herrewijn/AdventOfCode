@@ -1,7 +1,6 @@
 import re
 
 class Directory:
-
     def __init__(self, name, parent_dir):
         self.name = name
         self.parent_dir = parent_dir
@@ -44,8 +43,7 @@ with open("07/input.txt") as file:
         # cd (cd into dir, it should already exit!)
         cd_line = re.match(r"^\$ cd ([a-z]+)", line)
         if cd_line:
-            dir_name = cd_line.group(1)
-            curr_dir = next((obj for obj in curr_dir.child_dirs if obj.name == dir_name), None)
+            curr_dir = next((obj for obj in curr_dir.child_dirs if obj.name == cd_line.group(1)), None)
 
         # cd ..  (directory up)
         dir_up_line = re.match(r"^\$ cd \.\.", line)
@@ -55,5 +53,4 @@ with open("07/input.txt") as file:
 # result
 free_space = 70000000 - root_dir.get_total_size()
 space_to_free = 30000000 - free_space
-volumes = min(dir.get_total_size() for dir in dir_list if dir.get_total_size() >= space_to_free)
-print(volumes)
+print(min(dir.get_total_size() for dir in dir_list if dir.get_total_size() >= space_to_free))
