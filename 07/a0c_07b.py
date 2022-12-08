@@ -1,23 +1,24 @@
 import re
 
+
 class Directory:
     def __init__(self, name, parent_dir):
         self.name = name
         self.parent_dir = parent_dir
         self.child_dirs = []
         self.file_size = 0
-    
+
     def __str__(self):
         return self.name
 
     def add_child_dir(self, child_dir):
         self.child_dirs.append(child_dir)
-    
+
     def add_file_size(self, file_size):
         self.file_size += file_size
 
     def get_total_size(self):
-        return(self.file_size + sum(child.get_total_size() for child in self.child_dirs))
+        return self.file_size + sum(child.get_total_size() for child in self.child_dirs)
 
 
 root_dir = Directory('/', None)

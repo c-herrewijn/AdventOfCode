@@ -9,6 +9,6 @@ with open("04/input.txt") as file:
 
         # full overlap:
         if (e1_start <= e2_start and e1_end >= e2_end) or (e2_start <= e1_start and e2_end >= e1_end):
-            count+=1
+            count += 1
 
 print(count)

@@ -5,7 +5,7 @@ with open("06/input.txt") as file:
     while not found:
         sub = s[count:count+14]
         found = (len(set(sub)) == len(sub))
-        count+=1
+        count += 1
 
 # result
 print(count+13)
