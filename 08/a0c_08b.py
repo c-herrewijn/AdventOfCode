@@ -41,13 +41,8 @@ def v_east(f, x, y, x_max):
 def scenic_score(f, x, y, x_max, y_max):
     return v_north(f, x, y) * v_south(f, x, y, y_max) * v_west(f, x, y) * v_east(f, x, y, x_max)
 
-f = []
 with open("08/input.txt") as file:
-    for y, line in enumerate(file):
-        f.append([])
-        for c in line.strip():
-            f[y].append(int(c))
-
+    f = [[char for char in line.strip()] for line in file]
     y_max = len(f)
     x_max = len(f[0])
     print(max(scenic_score(f, x, y, x_max, y_max) for x in range(x_max) for y in range(y_max)))
