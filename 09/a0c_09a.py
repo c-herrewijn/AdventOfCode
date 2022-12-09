@@ -19,6 +19,6 @@ with open("09/input.txt") as file:
             h = move_head(dir, h)
             if abs(h[0] - t[0]) == 2 or abs(h[1] - t[1]) == 2:
                 t = move_tail(h, t)
-            trail.add(t)
+                trail.add(t)
 
 print(len(trail))
