@@ -1,12 +1,6 @@
 def move_head(dir, h):
-    if (dir == 'U'):
-        h[1] += 1
-    if (dir == 'D'):
-        h[1] -= 1
-    if (dir == 'R'):
-        h[0] += 1
-    if (dir == 'L'):
-        h[0] -= 1
+    dirs = {'U': (0, 1), 'D': (0, -1), 'R': (1, 0), 'L': (-1, 0)}
+    h = [h[i] + dirs[dir][i] for i in range(2)]
     return h
 
 
