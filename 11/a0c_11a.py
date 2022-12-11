@@ -10,7 +10,25 @@ class Monkey:
         self.next_mky_tf = next_mky_tf
         self.number_inspections = 0
 
+    def take_turn(self):
+        while self.items:
+            self.items[0] = self.inspect(self.items[0])
+            next_monkey = monkeys[self.next_mky_tf[0]] if self.test(self.items[0]) else monkeys[self.next_mky_tf[1]]
+            self.throw(next_monkey)
+           
+    def inspect(self, item):
+        self.number_inspections += 1
+        operand = item if self.operation[1] == "old" else int(self.operation[1])
+        return int((item * operand) / 3) if self.operation[0] == "*" else int((item + operand) / 3)
 
+    def test(self, item):
+        return item % self.test_factor == 0
+
+    def throw(self, next_monkey):
+        next_monkey.items.append(self.items.pop(0))
+  
+
+# parse data
 monkeys = []
 with open("11/input.txt") as file:
     lines = file.readlines()
@@ -23,13 +41,10 @@ with open("11/input.txt") as file:
         next_mky_false = int(re.match(r"^ *If false: throw to monkey ([0-9]+)", lines[m_line+4]).group(1))
         monkeys.append(Monkey(items, operation, test_factor, (next_mky_true, next_mky_false)))
 
-for r in range(20):
+# monkey business!
+for _ in range(20):
     for monkey in monkeys:
-        while monkey.items:
-            monkey.number_inspections += 1
-            item = monkey.items.pop(0)
-            operand = item if monkey.operation[1] == "old" else int(monkey.operation[1])
-            item = int((item * operand) / 3) if monkey.operation[0] == "*" else int((item + operand) / 3)
-            monkeys[monkey.next_mky_tf[0]].items.append(item) if item % monkey.test_factor == 0 else monkeys[monkey.next_mky_tf[1]].items.append(item)
+        monkey.take_turn()
 
+# result
 print(math.prod(sorted([monkey.number_inspections for monkey in monkeys], reverse=True)[0:2]))
