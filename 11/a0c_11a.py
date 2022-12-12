@@ -15,7 +15,7 @@ class Monkey:
             self.items[0] = self.inspect(self.items[0])
             next_monkey = monkeys[self.next_mky_tf[0]] if self.test(self.items[0]) else monkeys[self.next_mky_tf[1]]
             self.throw(next_monkey)
-           
+
     def inspect(self, item):
         self.number_inspections += 1
         operand = item if self.operation[1] == "old" else int(self.operation[1])
@@ -26,7 +26,7 @@ class Monkey:
 
     def throw(self, next_monkey):
         next_monkey.items.append(self.items.pop(0))
-  
+
 
 # parse data
 monkeys = []

@@ -16,8 +16,8 @@ s = ""
 for i in range(0, len(register)):
     diff = (((i % 40)+1) - register[i])
     if diff == 2 or diff == 1 or diff == 0:
-        s+="#"
+        s += "#"
     else:
-        s+="."
+        s += "."
 
 print(s)
