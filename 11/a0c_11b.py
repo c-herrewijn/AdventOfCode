@@ -25,11 +25,9 @@ class Monkey:
             mod_item.multiply_modulos(int(self.operation[1]))
         elif self.operation[0] == "*" and self.operation[1] == "old":
             mod_item.square_modulos()
-        else:
-            print("error")
 
     def test(self, mod_item):
-        return(mod_item.modulos[divisors.index(self.test_factor)] == 0)
+        return mod_item.modulos[divisors.index(self.test_factor)] == 0
 
     def throw(self, next_monkey):
         next_monkey.mod_items.append(self.mod_items.pop(0))
