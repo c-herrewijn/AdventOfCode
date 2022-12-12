@@ -16,7 +16,7 @@ class Monkey:
             self.inspect(self.mod_items[0])
             next_monkey = monkeys[self.next_mky_tf[0]] if self.test(self.mod_items[0]) else monkeys[self.next_mky_tf[1]]
             self.throw(next_monkey)
-           
+
     def inspect(self, mod_item):
         self.number_inspections += 1
         if self.operation[0] == "+":
@@ -31,7 +31,7 @@ class Monkey:
 
     def throw(self, next_monkey):
         next_monkey.mod_items.append(self.mod_items.pop(0))
-  
+
 
 class ModItem:
     def __init__(self, start_val, divisors):
