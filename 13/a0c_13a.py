@@ -55,17 +55,20 @@ def compare(left, right):
     if type(right) is not list:
         right = [right]
     for i, _ in enumerate(left):
-        if i > len(right) - 1:
+        if i > len(right) - 1:  # right ran out of items
             return -1
         result = compare(left[i], right[i])
         if result != 0:
             return result
-    return 1
+    if len(left) < len(right):  # left ran out of items
+        return 1
+    else:
+        return 0
 
 
 sum_indices = 0
 index = 1
-with open("13/input_test.txt") as file:
+with open("13/input.txt") as file:
     lines = file.readlines()
     for i in range(0, len(lines), 3):
         left = parse_line(lines[i].strip())
@@ -75,5 +78,3 @@ with open("13/input_test.txt") as file:
         index += 1
 
 print(sum_indices)
-
-# 6251 -> too high!
