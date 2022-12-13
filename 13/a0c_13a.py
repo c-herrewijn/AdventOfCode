@@ -11,22 +11,31 @@ def get_element(lst, depth):
         return get_element(lst[depth[0]], depth[1:])
 
 
-# TODO: support multi digit numbers
+'''
+parses a string into a nested list
+'''
 def parse_line(line):
     lst = []
     depth = [0]
-    for i, c in enumerate(line):
+    i = 0
+    while i < len(line):
+        c = line[i]
         if not (i == 0 or i == len(line) -1):  # skip first and last char of line
             el = get_element(lst, depth[:-1])
             if c == "[":
                 el.append([])
                 depth.append(0)
             if c.isnumeric():
-                el.append(int(c))
+                num = int(c)
+                while line[i+1].isnumeric():
+                    num = num * 10 + int(line[i+1])
+                    i += 1
+                el.append(int(num))
                 depth[-1] += 1
             if c == "]":
                 depth.pop(-1)
                 depth[-1] += 1
+        i += 1
     return lst
 
 
