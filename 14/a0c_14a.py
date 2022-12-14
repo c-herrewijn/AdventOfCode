@@ -11,7 +11,7 @@ def parse_line(line):
     return [tuple(map(int, point.split(","))) for point in line.strip().split(" -> ")]
 
 
-def print_field(field):
+def print_field():
     for y in range(y_max + 1):
         for x in range(x_min, x_max + 1):
             print(field[y][x-x_min], end="")
@@ -25,8 +25,29 @@ def add_rock_to_field(r_start, r_end):
         for y in range(min(y_coords), max(y_coords)+1):
             field[y][x] = "#"
 
+
+def add_sand():
+    x = 500
+    y = 0
+    while y <= y_max:
+        if y == y_max:
+            return False
+        if field[y+1][x-x_min] == ".":
+            y += 1
+        else:
+            if field[y+1][x-x_min-1] == ".":
+                y += 1
+                x -= 1
+            elif field[y+1][x-x_min+1] == ".":
+                y += 1
+                x += 1
+            else:
+                field[y][x-x_min] = "o"
+                return True
+
+
 # parse file
-with open("14/input_test.txt") as file:
+with open("14/input.txt") as file:
     instructions = [parse_line(line) for line in file.readlines()]
 
 # create field
@@ -36,4 +57,13 @@ for line in instructions:
     for i in range(len(line)-1):
         add_rock_to_field(line[i], line[i+1])
 
-print_field(field)
+# drop sand
+space_available = True
+count = 0
+while space_available:
+    space_available = add_sand()
+    if space_available:
+        count += 1
+
+print_field()
+print(count)
