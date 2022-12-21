@@ -1,7 +1,30 @@
 import re
-import itertools
 
 
+class Route:
+    def __init__(self, route):
+        self.route = route
+        self.time_left = 30
+        self.finished = False
+
+    def get_next_valves(self):
+        pos = self.route[-1]
+        return [i for i in range(len(valves)) if i not in self.route and dist[pos][i] < self.time_left]
+
+    def score(self):
+        minute = 30
+        score = 0
+        for s in range(len(self.route)-1):
+            i = self.route[s]
+            j = self.route[s+1]
+            minute -= dist[i][j] + 1
+            if minute <= 0:
+                return score
+            score += minute * flow_rates[valves[j]]
+        return score
+
+
+# used to parse data
 def get_adjacent_valves(valve, trail):
     adjacent_valves = []
     for i in adj_lst[valve]:
@@ -19,28 +42,10 @@ def get_direct_distance(v1, v2):
     return next((v[1] for v in w_adj[v1] if v[0] == v2))
 
 
-def score_route(route):
-    minute = 30
-    score = 0
-    for s in range(len(route)):
-        i = route[s-1] if s > 0 else 0
-        j = route[s]
-        minute -= travel_time(i, j)
-        if minute <= 0:
-            return score
-        score += minute * flow_rates[valves[j]]
-    return score
-
-
-# add 1 for the time to open the valve
-def travel_time(i, j):
-    return dist[i][j] + 1
-
-
 # parse data:
 adj_lst = {}  # {'AA': ['BB', ..], ..}
 flow_rates = {}  # {'CC': 1, ..}
-with open("2022/16/input.txt") as file:
+with open("2022/16/input_test.txt") as file:
     for line in file:
         match = re.match(r"^Valve ([A-Z]+) has flow rate=([0-9]+); tunnels? leads? to valves? (.*)", line)
         name, flow_rate, adjecents = match.group(1), int(match.group(2)), list(match.group(3).split(", "))
@@ -70,4 +75,21 @@ for k, _ in enumerate(valves):
         for j, _ in enumerate(valves):
             dist[i][j] = min((dist[i][j], dist[i][k] + dist[k][j]))
 
-print(max(score_route(r) for r in itertools.permutations(range(1, len(valves)), len(valves)-1)))
+# find best path
+routes = [Route([0])]
+while True:
+    route = next((r for r in routes if not r.finished), False)
+    if not route:
+        break
+    next_options = route.get_next_valves()
+    if not next_options:
+        route.finished = True
+    if len(next_options) > 1:
+        cur_route = route.route.copy()
+    for i, option in enumerate(next_options):
+        if i == 0:
+            route.route.append(option)
+        else:
+            routes.append(Route(cur_route.copy()+[option]))
+
+print(max(r.score() for r in routes))
