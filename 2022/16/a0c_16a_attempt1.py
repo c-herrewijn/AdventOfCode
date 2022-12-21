@@ -35,8 +35,8 @@ class State:
                     self.minute + 1,
                     calc_score(self.score, self.minute + 1, self.position.flow_rate)))
 
-            # only add next state if there is no exiting state that is better or equal on all: time AND score AND open valves
-            # NOTE: fewer open valves is better since it has more opportunity to increase the score later on 
+            # only add state if there is no exiting state that is better or equal on all: time, score AND open valves
+            # NOTE: fewer open valves is better since it has more opportunity to increase the score later on
             for next_valve in self.position.next_valves:
                 if not next((s for s in states if
                             s.position == next_valve and
@@ -59,7 +59,9 @@ with open("2022/16/input.txt") as file:
     for line in file:
         match = re.match(r"^Valve ([A-Z]+) has flow rate=([0-9]+); tunnels? leads? to valves? (.*)", line)
         if match:
-            valves.update({match.group(1): Valve(match.group(1), int(match.group(2)), list(match.group(3).split(", ")))})
+            valves.update({match.group(1): Valve(match.group(1),
+                          int(match.group(2)),
+                          list(match.group(3).split(", ")))})
 for valve in valves.values():
     valve.next_valves = [valves[i] for i in valve.next_valves_str]
 
