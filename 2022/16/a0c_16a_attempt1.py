@@ -38,13 +38,15 @@ class State:
             # only add next state if there is no exiting state that is better or equal on all: time AND score AND open valves
             # NOTE: fewer open valves is better since it has more opportunity to increase the score later on 
             for next_valve in self.position.next_valves:
-                if not next((s for s in states if   s.position == next_valve and \
-                                                    s.score >= self.score and \
-                                                    s.minute <= self.minute + 1 and \
-                                                    s.open.issubset(self.open)), False):
+                if not next((s for s in states if
+                            s.position == next_valve and
+                            s.score >= self.score and
+                            s.minute <= self.minute + 1 and
+                            s.open.issubset(self.open)), False):
                     new_state = State(next_valve, self.open, self.minute + 1, self.score)
                     next_states.append(new_state)
         return next_states
+
 
 def calc_score(start_sore, minute, flow_rate):
     return start_sore + (30 - minute) * flow_rate
