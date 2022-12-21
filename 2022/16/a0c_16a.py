@@ -1,4 +1,5 @@
 import re
+import itertools
 
 
 def get_adjacent_valves(valve, trail):
@@ -16,6 +17,24 @@ def get_adjacent_valves(valve, trail):
 
 def get_direct_distance(v1, v2):
     return next((v[1] for v in w_adj[v1] if v[0] == v2))
+
+
+def score_route(route):
+    minute = 30
+    score = 0
+    for s in range(len(route)):
+        i = route[s-1] if s > 0 else 0
+        j = route[s]
+        minute -= travel_time(i, j)
+        if minute <= 0:
+            return score
+        score += minute * flow_rates[valves[j]]
+    return score
+
+
+# add 1 for the time to open the valve
+def travel_time(i, j):
+    return dist[i][j] + 1
 
 
 # parse data:
@@ -51,4 +70,4 @@ for k, _ in enumerate(valves):
         for j, _ in enumerate(valves):
             dist[i][j] = min((dist[i][j], dist[i][k] + dist[k][j]))
 
-# find score for all possible orders to visit the valves, take into account travel time!
+print(max(score_route(r) for r in itertools.permutations(range(1, len(valves)), len(valves)-1)))
